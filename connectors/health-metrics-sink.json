@@ -1,0 +1,20 @@
+{
+  "name": "health-metrics-sink",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": "1",
+    "topics": "sapphire.health.events",
+    "connection.url": "${POSTGRES_JDBC_URL}",
+    "connection.user": "${POSTGRES_USER}",
+    "connection.password": "${POSTGRES_PASSWORD}",
+    "table.name.format": "health_metrics",
+    "insert.mode": "insert",
+    "auto.create": "false",
+    "auto.evolve": "false",
+    "pk.mode": "none",
+    "fields.whitelist": "userId,metricType,recordedAt,deviceSource,ingestionSource,valueOriginal,unit,valueCelsius,measurementMethod",
+    "transforms": "renameFields",
+    "transforms.renameFields.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.renameFields.renames": "userId:user_id,metricType:metric_type,recordedAt:recorded_at,deviceSource:device_source,ingestionSource:ingestion_source,valueOriginal:value_original,valueCelsius:value_celsius,measurementMethod:measurement_method"
+  }
+}
